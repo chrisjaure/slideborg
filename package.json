@@ -1,0 +1,19 @@
+{
+  "name": "nko3-view-the-source-luke",
+  "version": "0.0.0",
+  "description": "View the Source, Luke",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nko3/view-the-source-luke.git"
+  },
+  "dependencies": {
+  },
+  "engines": {
+    "node": "0.8.x"
+  },
+  "subdomain": "view-the-source-luke.nko3"
+}
