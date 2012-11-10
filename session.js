@@ -19,7 +19,7 @@ Session.prototype.addClient = function(client) {
 
 Session.prototype.getClients = function() {
 	return this.clients;
-}
+};
 
 Session.prototype.requestPage = function() {
 	request(this.url, function(err, res, body) {

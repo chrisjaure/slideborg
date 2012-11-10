@@ -6,7 +6,9 @@ var sio = require('socket.io'),
 
 // TODO: expire old sessions
 
-exports.listen = function(server) {
+var IO = module.exports = {};
+
+IO.listen = function(server) {
 	io = sio.listen(server);
 
 	io.sockets.on('connection', function(socket) {
@@ -15,14 +17,12 @@ exports.listen = function(server) {
 			
 			var sessionid = data.room;
 
-			if(exports.getSession(sessionid)) {
+			if (IO.getSession(sessionid)) {
 				console.log("Client connected to room: "+ sessionid);
-				exports.broadcastToRoom(sessionid, "announcement", "Client Connected");
+				IO.broadcastToRoom(sessionid, "announcement", "Client Connected");
 				socket.join(sessionid);
-				setTimeout(function() {
-					exports.broadcastToRoom(sessionid, "next");
-				}, 1000);
-			} else {
+			}
+			else {
 				console.log("Session "+ sessionid +" session is no longer active.");
 				socket.emit('inactive');
 				socket.disconnect();
@@ -33,16 +33,16 @@ exports.listen = function(server) {
 	});
 };
 
-exports.createSession = function(url) {
+IO.createSession = function(url) {
 	var session = new Session(url);
 	sessions.set(session.id, session);
 	return session;
 };
 
-exports.getSession = function(id) {
+IO.getSession = function(id) {
 	return sessions.get(id);
 };
 
-exports.broadcastToRoom = function (session, event, message) {
+IO.broadcastToRoom = function (session, event, message) {
 	io.sockets.in(session.id).emit(event, message);
 };
