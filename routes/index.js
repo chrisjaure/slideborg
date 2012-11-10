@@ -30,6 +30,7 @@ exports.generate = function(app) {
 		});
 	});
 
+	// provide a viewing url
 	app.get('/deck/:id/', function(req, res, next) {
 		var session = io.getSession(req.params.id);
 		if (session) {
@@ -41,11 +42,17 @@ exports.generate = function(app) {
 		}
 	});
 
+	// TODO: provide a controlling url
+
+	// TODO: provide a remote url
+
+	// proxy all relative asset requests
 	app.get('/deck/:id/*', function(req, res, next) {
 		var
 			session = io.getSession(req.params.id),
 			asset_url;
 		if (session) {
+			// TODO: make sure this url is always right
 			asset_url = session.url + req.url.replace('/deck/'+session.id + '/', '');
 			req.pipe(request(asset_url)).pipe(res);
 		}

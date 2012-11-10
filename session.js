@@ -5,6 +5,7 @@ var
 
 var Session = function(url) {
 	this.clients = [];
+	// TODO: normalize url - remove hash, etc.
 	this.url = url;
 	this.id = uuid.v4();
 
@@ -18,10 +19,16 @@ Session.prototype.addClient = function(client) {
 Session.prototype.requestPage = function() {
 	request(this.url, function(err, res, body) {
 		var $ = cheerio.load(body);
+
+		// TODO: normalize all relative asset urls
+
+		// TODO: inject client script here, socket.io too
 		$('body').append('<script>alert("here");</script>');
 
 		this.page = $.html();
 	}.bind(this));
 };
+
+// TODO: write socket broadcasting and joining logic (https://github.com/LearnBoost/socket.io/wiki/Rooms)
 
 exports.Session = Session;

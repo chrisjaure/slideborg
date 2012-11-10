@@ -3,6 +3,8 @@ var sio = require('socket.io'),
 	io,
 	sessions = {};
 
+// TODO: expire old sessions
+
 exports.listen = function(server) {
 	io = sio.listen(server);
 };
