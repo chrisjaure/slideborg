@@ -17,6 +17,10 @@ Session.prototype.addClient = function(client) {
 	this.clients.push(client);
 };
 
+Session.prototype.getClients = function() {
+	return this.clients;
+}
+
 Session.prototype.requestPage = function() {
 	request(this.url, function(err, res, body) {
 		var $ = cheerio.load(body);
