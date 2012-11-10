@@ -3,9 +3,7 @@ var nap = require('nap');
 module.exports = function(assets) {
 	var maps = {};
 
-	nap({
-		assets: assets
-	});
+	nap({ assets: assets });
 	nap.package();
 
 	Object.keys(assets).forEach(function asset_type_loop(type) {

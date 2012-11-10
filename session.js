@@ -24,9 +24,7 @@ Session.prototype.requestPage = function() {
 		// TODO: normalize all relative asset urls
 
 		// TODO: inject client script here, socket.io too
-		$('body')
-			.append('<script src="/socket.io/socket.io.js"></script>')
-			.append(config.mapped_assets.assets.js.viewer);
+		$('body').append(config.mapped_assets.assets.js.viewer);
 
 		this.page = $.html();
 	}.bind(this));

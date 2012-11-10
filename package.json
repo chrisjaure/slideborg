@@ -4,7 +4,9 @@
   "description": "View the Source, Luke",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "./build.sh",
+    "dev-build": "./build.sh -w"
   },
   "repository": {
     "type": "git",
