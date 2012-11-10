@@ -28,6 +28,7 @@
   },
   "subdomain": "view-the-source-luke.nko3",
   "devDependencies": {
-    "browserify": "~1.16.3"
+    "browserify": "~1.16.3",
+    "jquery-browserify": "~1.8.1"
   }
 }

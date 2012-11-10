@@ -1,6 +1,5 @@
-var Map = require('collections/map');
-
 var sio = require('socket.io'),
+	Map = require('collections/map'),
 	Session = require('./session').Session,
 	sessions = new Map(),
 	io;
@@ -12,23 +11,26 @@ exports.listen = function(server) {
 
 	io.sockets.on('connection', function(socket) {
 
-        socket.on('subscribe', function(data) {
-        	
-        	var sessionid = data.room;
+		socket.on('subscribe', function(data) {
+			
+			var sessionid = data.room;
 
-        	if(exports.getSession(sessionid)) {
-        		console.log("Client connected to room: "+ sessionid);
-        		exports.broadcastToRoom(sessionid, "announcement", "Client Connected");
-            	socket.join(sessionid);            	
-        	} else {
-        		console.log("Session "+ sessionid +" session is no longer active.")
-        		socket.emit('inactive');
-        		socket.disconnect();
-        	}
+			if(exports.getSession(sessionid)) {
+				console.log("Client connected to room: "+ sessionid);
+				exports.broadcastToRoom(sessionid, "announcement", "Client Connected");
+				socket.join(sessionid);
+				setTimeout(function() {
+					exports.broadcastToRoom(sessionid, "next");
+				}, 1000);
+			} else {
+				console.log("Session "+ sessionid +" session is no longer active.");
+				socket.emit('inactive');
+				socket.disconnect();
+			}
 
-        });
+		});
 
-    });
+	});
 };
 
 exports.createSession = function(url) {
