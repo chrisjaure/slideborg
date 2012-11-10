@@ -38,5 +38,5 @@ app.use(function(req, res, next){
 
 });
 
-app.locals(map_assets(config.assets));
+app.locals(config.mapped_assets);
 routes.generate(app);

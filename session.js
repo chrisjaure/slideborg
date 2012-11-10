@@ -1,7 +1,8 @@
 var
 	request = require('request'),
 	cheerio = require('cheerio'),
-	uuid = require('node-uuid');
+	uuid = require('node-uuid'),
+	config = require('./config');
 
 var Session = function(url) {
 	this.clients = [];
@@ -23,7 +24,9 @@ Session.prototype.requestPage = function() {
 		// TODO: normalize all relative asset urls
 
 		// TODO: inject client script here, socket.io too
-		$('body').append('<script>alert("here");</script>');
+		$('body')
+			.append('<script src="/socket.io/socket.io.js"></script>')
+			.append(config.mapped_assets.assets.js.viewer);
 
 		this.page = $.html();
 	}.bind(this));
