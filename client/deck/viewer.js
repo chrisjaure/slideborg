@@ -21,3 +21,11 @@ socket.on('prev', function(data) {
 socket.on('connect_failed', function() {
 	console.log('failed');
 });
+
+socket.on('announcement', function(message){
+	console.log('Incoming Announcement:' + message);
+});
+
+socket.on('inactive', function(message){
+	console.log('This connection is no longer active.');
+});
