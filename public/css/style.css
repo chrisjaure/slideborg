@@ -1,0 +1,132 @@
+/*	=========================================================================
+	Primary styles.
+	Author: Chris Jaure
+	========================================================================= */
+
+h1,
+h2,
+h3 {
+	font-family: 'Viga', 'Arial Black', 'Arial', sans-serif;
+}
+
+h1 {
+	font-size: 2em;
+	letter-spacing: -0.1em;
+}
+
+h2 {
+	font-size: 1.6em;
+	border-bottom: solid 1px #ccc;
+	font-weight: normal;
+}
+
+ul,ol {
+	padding-left: 0;
+	margin-left: 0;
+}
+
+.dark {
+	background: #333;
+	color: #fff;
+}
+
+.dark a {
+	color: #fff;
+}
+
+.wrapper {
+	max-width: 60em;
+	margin: 0 auto;
+	position: relative;
+	padding: 0 1em;
+}
+
+.main-header {
+	margin-bottom: 2.5em;
+}
+
+.logotype {
+	font-size: 3em;
+	margin:0.2em 0 0;
+}
+.logotype a {
+	text-decoration: none;
+}
+
+.main-nav {
+	margin-bottom: 1em;
+	font-size: 1.2em;
+}
+.main-nav li {
+	margin-bottom: 0.4em;
+}
+.main-nav a {
+	text-decoration: none;
+	font-weight: bold;
+	background: #555;
+	padding:0 0.2em;
+}
+.main-nav a:hover,
+.main-nav .active,
+.main-nav .active:hover {
+	border-left: solid 0.2em #f0f;
+}
+.main-nav .active,
+.main-nav .active:hover {
+	cursor: default;
+	border-left-width: 0.6em;
+}
+
+.main
+
+.main-footer {
+	margin-top: 2.5em;
+}
+.main-footer .wrapper {
+	border-top: solid 0.6em #333;
+}
+
+@media (min-width: 60em) {
+
+	.main-nav {
+		position: absolute;
+		top:2em;
+		right: 1em;
+	}
+
+}
+
+@media (min-width: 35em) {
+
+	.logotype {
+		margin:0.4em 0;
+		font-size: 3.5em;
+	}
+
+	.main-nav {
+		font-size: 1em;
+	}
+
+	.main-nav li {
+		display: inline;
+	}
+	.main-nav a {
+		margin-left: 1.5em;
+		display: inline-block;
+	}
+	.main-nav li:first-child a {
+		margin-left: 0;
+	}
+
+	.main-nav a:hover,
+	.main-nav .active,
+	.main-nav .active:hover {
+		border-bottom: solid 0.2em #f0f;
+		border-left: 0;
+	}
+	.main-nav .active,
+	.main-nav .active:hover {
+		border-bottom-width: 0.6em;
+	}
+
+}

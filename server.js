@@ -1,7 +1,17 @@
-var http = require('http');
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hello World\n');
-}).listen(8000);
+var
+	http = require('http'),
+	app = require('./app'),
 
-console.log('Server running at http://0.0.0.0:8000/');
+	server;
+
+server = http.createServer(app);
+require('./io')(server);
+
+server.listen(app.get('port'), function(err) {
+	if (err) {
+		console.error(err);
+	}
+	else {
+		console.log('listening on port %s', server.address().port);
+	}
+});
