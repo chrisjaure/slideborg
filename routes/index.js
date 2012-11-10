@@ -1,7 +1,11 @@
 var
 	fs = require('fs'),
 	path = require('path'),
-	config = require('../config');
+	cheerio = require('cheerio'),
+	request = require('request'),
+	config = require('../config'),
+
+	slideshows = [];
 
 exports.generate = function(app) {
 

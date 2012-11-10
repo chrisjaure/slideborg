@@ -1,7 +1,12 @@
 var sio = require('socket.io'),
+	Session = require('./session').Session,
+	io,
+	sessions = [];
 
-	io;
-
-module.exports = function(server) {
+exports.listen = function(server) {
 	io = sio.listen(server);
+};
+
+exports.createSession = function(url) {
+	return new Session(url);
 };

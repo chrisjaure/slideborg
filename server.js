@@ -5,7 +5,7 @@ var
 	server;
 
 server = http.createServer(app);
-require('./io')(server);
+require('./io').listen(server);
 
 server.listen(app.get('port'), function(err) {
 	if (err) {
