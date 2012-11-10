@@ -15,15 +15,24 @@ IO.listen = function(server) {
 
 		socket.on('subscribe', function(data) {
 			
-			var sessionid = data.room;
+			var session = IO.getSession(data.room),
+				master = false;
 
-			if (IO.getSession(sessionid)) {
-				console.log("Client connected to room: "+ sessionid);
-				IO.broadcastToRoom(sessionid, "announcement", "Client Connected");
-				socket.join(sessionid);
+			if (session) {
+				console.log("Client connected to room: "+ data.room);
+				IO.broadcastToRoom(data.room, "announcement", "Client Connected");
+				socket.join(data.room);
+
+				if (session.isMaster(data.masterId)) {
+					master = true;
+				}
+
+				socket.emit('confirm', {
+					master: master
+				});
 			}
 			else {
-				console.log("Session "+ sessionid +" session is no longer active.");
+				console.log("Session "+ data.room +" session is no longer active.");
 				socket.emit('inactive');
 				socket.disconnect();
 			}

@@ -9,6 +9,7 @@ var Session = function(url) {
 	// TODO: normalize url - remove hash, etc.
 	this.url = url;
 	this.id = uuid.v4();
+	this.masterId = uuid.v4().substr(0,8);
 
 	this.requestPage();
 };
@@ -32,6 +33,10 @@ Session.prototype.requestPage = function() {
 
 		this.page = $.html();
 	}.bind(this));
+};
+
+Session.prototype.isMaster = function(id) {
+	return (id == this.masterId);
 };
 
 // TODO: write socket broadcasting and joining logic (https://github.com/LearnBoost/socket.io/wiki/Rooms)

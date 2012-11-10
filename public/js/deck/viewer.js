@@ -13604,13 +13604,14 @@ require.define("/client/deck/viewer.js",function(require,module,exports,__dirnam
 	jq = require('../../node_modules/jquery-browserify/lib/jquery.js'),
 
 	api,
-	socket;
+	socket,
+	isMaster = false;
 
 jq.noConflict(true);
 
 api = (function(){
 	if (window.impress && impress.supported) {
-		return impress('impress');
+		return impress();
 	}
 	else if (window.jQuery && jQuery.deck) {
 		return {
@@ -13642,16 +13643,27 @@ api = (function(){
 socket = io.connect('http://localhost:8000');
 
 socket.on('connect', function() {
-	var room = window.location.pathname.match(/\/deck\/([^\/]*)\//);
+	var room = window.location.pathname.match(/\/deck\/([^\/\|]*)\|?([^\/]*)?\/?/);
+	console.log(room);
 	if (room[1]) {
-		room = room[1];
-		socket.emit('subscribe', { room: room });
+		socket.emit('subscribe', { room: room[1], masterId: room[2] });
 	}
 });
 
-socket.on('next', api.next);
+socket.on('confirm', function(data) {
 
-socket.on('prev', api.prev);
+	console.log(data);
+
+	if (data.master) {
+
+	}
+	else {
+		socket.on('next', api.next);
+		socket.on('prev', api.prev);
+	}
+
+
+});
 
 socket.on('connect_failed', function() {
 	console.log('failed');
