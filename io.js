@@ -20,14 +20,14 @@ IO.listen = function(server) {
 
 			if (session) {
 				console.log("Client connected to room: "+ data.room);
-				IO.broadcastToRoom(data.room, "announcement", "Client Connected");
+				session.broadcast("announcement", "Client Connected");
 				socket.join(data.room);
 
 				if (session.isMaster(data.masterId)) {
 					master = true;
 					socket.on('change', function(index) {
 						session.index = index;
-						IO.broadcastToRoom(data.room, 'change', index);
+						session.broadcast('change', index);
 					});
 				}
 
@@ -48,15 +48,11 @@ IO.listen = function(server) {
 };
 
 IO.createSession = function(url) {
-	var session = new Session(url);
+	var session = new Session(url, io);
 	sessions.set(session.id, session);
 	return session;
 };
 
 IO.getSession = function(id) {
 	return sessions.get(id);
-};
-
-IO.broadcastToRoom = function (session, event, message) {
-	io.sockets.in(session.id).emit(event, message);
 };

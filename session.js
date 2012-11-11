@@ -5,12 +5,11 @@ var
 	uuid = require('node-uuid'),
 	config = require('./config');
 
-var Session = function(link) {
-	this.clients = [];
-	
+var Session = function(link, io) {
 	link = url.parse(link);
 	link.hash = null;
 	this.url = url.format(link);
+	this.io = io;
 
 	this.id = uuid.v4();
 	this.masterId = uuid.v4().substr(0,8);
@@ -20,11 +19,15 @@ var Session = function(link) {
 };
 
 Session.prototype.addClient = function(client) {
-	this.clients.push(client);
+	client.join(this.id);
 };
 
 Session.prototype.getClients = function() {
-	return this.clients;
+	return this.io.sockets.clients(this.id);
+};
+
+Session.prototype.broadcast = function(event, data) {
+	this.io.sockets.in(this.id).emit(event, data);
 };
 
 Session.prototype.requestPage = function() {
