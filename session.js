@@ -29,8 +29,9 @@ Session.prototype.requestPage = function() {
 
 		// TODO: normalize all relative asset urls
 
-		// TODO: inject client script here, socket.io too
-		$('body').append(config.mapped_assets.assets.js.viewer);
+		$('body')
+			.append('<script src="http://yui.yahooapis.com/3.7.3/build/yui/yui-min.js"></script>')
+			.append(config.mapped_assets.assets.js.viewer);
 
 		this.page = $.html();
 	}.bind(this));
@@ -39,7 +40,5 @@ Session.prototype.requestPage = function() {
 Session.prototype.isMaster = function(id) {
 	return (id == this.masterId);
 };
-
-// TODO: write socket broadcasting and joining logic (https://github.com/LearnBoost/socket.io/wiki/Rooms)
 
 exports.Session = Session;
