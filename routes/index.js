@@ -1,17 +1,19 @@
 var
 	fs = require('fs'),
 	path = require('path'),
+	querystring = require('querystring'),
 	cheerio = require('cheerio'),
 	request = require('request'),
 	config = require('../config'),
 	io = require('../io'),
+	async = require('async'),
 
 	slideshows = [];
 
 exports.generate = function(app) {
 
 	app.get('/', function(req, res) {
-		render(res, 'index');
+		return render(res, 'index');
 	});
 
 	app.post('/', function(req, res) {
@@ -21,19 +23,30 @@ exports.generate = function(app) {
 		if (req.body.url) {
 			return session = io.createSession(req.body.url, function(err) {
 
+				var baseUrl = 'http://' + req.headers.host,
+					urls = {
+						original: req.body.url,
+						viewing: baseUrl + '/deck/'+ session.id +'/',
+						master: baseUrl + '/deck/'+ session.id + '|' + session.masterId +'/'
+					};
+
 				if (err) {
-					return render(res, 'index', {
-						message: "Hmm, something's not quite right... ("+ err.message +")"
-					});
+					return showError(err);
 				}
 
-				return render(res, 'index', {
-					urls: {
-						original: req.body.url,
-						viewing: '/deck/'+ session.id +'/',
-						master: '/deck/'+ session.id + '|' + session.masterId +'/'
-					},
-					message: 'Great! Use the URLs below'
+				async.series([
+					async.apply(shortenUrl, urls.viewing),
+					async.apply(shortenUrl, urls.master)
+				], function(err, results) {
+					if (!err) {
+						urls.viewing = results[0];
+						urls.master = results[1];
+					}
+
+					return render(res, 'index', {
+						urls: urls,
+						message: 'Great! Use the URLs below'
+					});
 				});
 
 			});
@@ -57,8 +70,6 @@ exports.generate = function(app) {
 			next();
 		}
 	});
-
-	// TODO: provide a controlling url
 
 	// TODO: provide a remote url
 
@@ -87,4 +98,38 @@ function render (res, body, locals) {
 
 function parseSessionId (id) {
 	return id.split('|')[0];
+}
+
+function showError (err) {
+	return render(res, 'index', {
+		message: "Hmm, something's not quite right... ("+ err.message +")"
+	});
+}
+
+function shortenUrl (url, callback) {
+	var params = {
+			format: 'json',
+			url: url
+		};
+
+	request('http://is.gd/create.php?' + querystring.stringify(params), function(err, res, body) {
+		var result;
+
+		if (err) {
+			return callback(err);
+		}
+
+		try {
+			result = JSON.parse(body);
+		}
+		catch (e) {
+			return callback(err);
+		}
+
+		if (result.errormessage) {
+			return callback(new Error(result.errormessage));
+		}
+
+		return callback(null, result.shorturl);
+	});
 }

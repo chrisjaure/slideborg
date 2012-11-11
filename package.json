@@ -21,7 +21,8 @@
     "whiskers": "~0.2.3",
     "nap": "~0.6.2",
     "node-uuid": "~1.4.0",
-    "collections":"~0.1.1"
+    "collections": "~0.1.1",
+    "async": "~0.1.22"
   },
   "engines": {
     "node": "0.8.x"
