@@ -37,6 +37,7 @@ exports.generate = function(app) {
 				return showError(err);
 			}
 
+
 			async.series([
 				async.apply(shortenUrl, urls.viewing),
 				async.apply(shortenUrl, urls.master)
@@ -46,6 +47,8 @@ exports.generate = function(app) {
 					urls.master = results[1];
 				}
 
+				session.setUrls(urls);
+				
 				return render(res, 'index', {
 					urls: urls,
 					message: 'Great! Use the URLs below'

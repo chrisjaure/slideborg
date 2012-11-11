@@ -15,6 +15,9 @@ var Session = function(link, io, callback) {
 	this.masterId = uuid.v4().substr(0,8);
 	this.index = 0;
 	this.timestamp = Date.now();
+	this.urls = {
+
+	};
 
 	this.requestPage(callback);
 };
@@ -63,6 +66,10 @@ Session.prototype.requestPage = function(callback) {
 
 Session.prototype.isMaster = function(id) {
 	return (id == this.masterId);
+};
+
+Session.prototype.setUrls = function(urls) {
+	this.urls = urls;
 };
 
 exports.Session = Session;

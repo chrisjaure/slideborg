@@ -20,24 +20,35 @@ IO.setup = function() {
 		socket.on('subscribe', function(data) {
 			
 			var session = IO.getSession(data.room),
-				master = false;
+				count,
+				response;
 
 			if (session) {
+				count = session.getClients().length + 1;
 				console.log("Client connected to room: "+ data.room);
+				session.broadcast('clientcount', count);
 				socket.join(data.room);
 
+				response = {
+					index: session.index,
+					count: count
+				};
+
+				socket.on('disconnect', function() {
+					session.broadcast('clientcount', session.getClients().length - 1);
+				});
+
 				if (session.isMaster(data.masterId)) {
-					master = true;
+					response.master = true;
+					response.urls = session.urls;
 					socket.on('change', function(index) {
 						session.index = index;
 						session.broadcast('triggerchange', index);
 					});
 				}
 
-				socket.emit('confirm', {
-					master: master,
-					index: session.index
-				});
+				socket.emit('confirm', response);
+
 			}
 			else {
 				socket.emit('inactive');

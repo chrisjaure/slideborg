@@ -4293,7 +4293,9 @@ require.define("/client/deck/deck.js",function(require,module,exports,__dirname,
 
 require.define("/client/deck/reveal.js",function(require,module,exports,__dirname,__filename,process,global){module.exports = {
 	goto: function(index) {
-		Reveal.slide.apply(Reveal, index);
+		if (Array.isArray(index)) {
+			Reveal.slide.apply(Reveal, index);
+		}
 	},
 	onChange: function(fn) {
 		Reveal.addEventListener('slidechanged', function(e) {
@@ -4336,7 +4338,7 @@ api = (function(){
 socket = io.connect();
 
 socket.on('connect', function() {
-	var room = window.location.pathname.match(/\/deck\/([^\/\|]*)\|?([^\/]*)?\/?/);
+	var room = decodeURI(window.location.pathname).match(/\/deck\/([^\/\|]*)\|?([^\/]*)?\/?/);
 	if (room[1]) {
 		socket.emit('subscribe', { room: room[1], masterId: room[2] });
 	}
@@ -4351,6 +4353,11 @@ socket.on('confirm', function(data) {
 		initViewer(data);
 	}
 
+	setTimeout(function() {
+		document.getElementById('slickslide').className = 'connected';
+		updateClientCount(data.count);
+	}, 100);
+
 });
 
 socket.on('connect_failed', function() {
@@ -4358,7 +4365,11 @@ socket.on('connect_failed', function() {
 });
 
 socket.on('inactive', function(message){
+	var container = document.getElementById('slickslide');
 	socket.disconnect();
+	if (container) {
+		container.className = '';
+	}
 	alert('This viewing session is no longer active :(');
 });
 
@@ -4366,21 +4377,53 @@ function initMaster (data) {
 	api.onChange(function(to) {
 		socket.emit('change', to);
 	});
+	createNotifier(true);
+	if (data.urls) {
+		createDropdown(data.urls);
+	}
 }
 
 function initViewer (data) {
 	socket.on('triggerchange', api.goto);
 	api.goto(data.index);
+	createNotifier();
 }
 
-function createNotifier () {
+function createNotifier (master) {
 	var
 		container = document.createElement('div'),
 		html = '';
 
-	div.id = 'slickslide';
+	html += '<span id="slickslide-client-count">0</span>';
 
-	document.body.append(container);
+	container.id = 'slickslide';
+	container.innerHTML = html;
+
+	document.body.appendChild(container);
+
+	socket.on('clientcount', function(count) {
+		updateClientCount(count);
+	});
+}
+
+function createDropdown (urls) {
+	var
+		container = document.createElement('div'),
+		html = '';
+
+	html += '<div id="slickslide-dropdown-inner"><ul>' +
+				'<li><a href="'+urls.viewing+'">Viewing URL</a></li>' +
+				'<li><a href="'+urls.master+'">Master URL</a></li>' +
+			'</ul></div>';
+
+	container.id = 'slickslide-dropdown';
+	container.innerHTML = html;
+
+	document.getElementById('slickslide').appendChild(container);
+}
+
+function updateClientCount (count) {
+	document.getElementById('slickslide-client-count').innerHTML = count;
 }
 });
 require("/client/deck/viewer.js");

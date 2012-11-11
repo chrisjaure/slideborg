@@ -1,7 +1,51 @@
 #slickslide {
 	position: fixed;
-	top: 0;
-	right: 0;
-	width: 20px;
-	height: 20px;
+	top: 10px;
+	right: 10px;
+	padding: 5px;
+	background: #FFD5C9;
+	color: #000;
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+	z-index: 99999;
+	border-radius: 5px;
+	font-size: 9px;
+}
+
+#slickslide.connected {
+	background: #92FF93
+}
+
+#slickslide-client-count {
+	cursor: default;
+}
+
+#slickslide-dropdown {
+	position: relative;
+}
+
+#slickslide-dropdown-inner {
+	display: none;
+	position: absolute;
+	right: 100%;
+	top: -5px;
+	background: #fff;
+	border-radius: 5px;
+	font-size: 14px;
+	box-sizing: border-box;
+	padding: 5px;
+	width: 100px;
+}
+#slickslide-dropdown-inner ul,
+#slickslide-dropdown-inner li {
+	list-style: none;
+	padding:0;
+	margin:0;
+}
+
+#slickslide-dropdown-inner a {
+	font-weight: bold;
+}
+
+#slickslide:hover #slickslide-dropdown-inner {
+	display: block;
 }
