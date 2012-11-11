@@ -15,7 +15,8 @@ config = module.exports = {
 		js: {
 			viewer: [
 				'/public/js/deck/viewer.js'
-			]
+			],
+			main: ['/public/js/behavior.js']
 		}
 	}
 };
