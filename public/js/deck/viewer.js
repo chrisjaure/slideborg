@@ -4323,8 +4323,8 @@ api = (function(){
 		return require('./reveal');
 	}
 	// custom api that plugins can write adapters for
-	else if (window.slyncr) {
-		return slyncr;
+	else if (window.slickslide) {
+		return slickslide;
 	}
 	// fallback to nothing
 	return {
@@ -4345,32 +4345,42 @@ socket.on('connect', function() {
 socket.on('confirm', function(data) {
 
 	if (data.master) {
-		initMaster();
+		initMaster(data);
 	}
 	else {
-		initViewer();
+		initViewer(data);
 	}
 
 });
 
 socket.on('connect_failed', function() {
-	console.log('failed');
+	alert('Sorry, could\'t connect to the viewing session :(');
 });
 
 socket.on('inactive', function(message){
-	alert('This viewing session is no longer active :(');
 	socket.disconnect();
+	alert('This viewing session is no longer active :(');
 });
 
-function initMaster () {
+function initMaster (data) {
 	api.onChange(function(to) {
 		socket.emit('change', to);
 	});
 }
 
-function initViewer () {
+function initViewer (data) {
 	socket.on('triggerchange', api.goto);
 	api.goto(data.index);
+}
+
+function createNotifier () {
+	var
+		container = document.createElement('div'),
+		html = '';
+
+	div.id = 'slickslide';
+
+	document.body.append(container);
 }
 });
 require("/client/deck/viewer.js");

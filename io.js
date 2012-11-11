@@ -1,5 +1,6 @@
+require('smap'); // provides Map
+
 var sio = require('socket.io'),
-	Map = require('collections/map'),
 	Session = require('./session').Session,
 	sessions = new Map(),
 	io;
@@ -62,7 +63,7 @@ IO.expireSessions = function() {
 		now = Date.now(),
 		durationInMilliseconds = 1800000; // half-hour
 
-	sessions.forEach(function(session, id) {
+	sessions.iterate(function(id, session) {
 		if (now - session.timestamp > durationInMilliseconds) {
 			console.log('Removing expired session %s', id);
 			session.destroy();

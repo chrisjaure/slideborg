@@ -18,44 +18,41 @@ exports.generate = function(app) {
 
 	app.post('/', function(req, res) {
 
-		var session;
-
-		if (req.body.url) {
-			return session = io.createSession(req.body.url, function(err) {
-
-				var baseUrl = 'http://' + req.headers.host,
-					urls = {
-						original: req.body.url,
-						viewing: baseUrl + '/deck/'+ session.id +'/',
-						master: baseUrl + '/deck/'+ session.id + '|' + session.masterId +'/'
-					};
-
-				if (err) {
-					return showError(err);
-				}
-
-				async.series([
-					async.apply(shortenUrl, urls.viewing),
-					async.apply(shortenUrl, urls.master)
-				], function(err, results) {
-					if (!err) {
-						urls.viewing = results[0];
-						urls.master = results[1];
-					}
-
-					return render(res, 'index', {
-						urls: urls,
-						message: 'Great! Use the URLs below'
-					});
-				});
-
-			});
-		}
-		else {
-			render(res, 'index', {
+		if (!req.body.url) {
+			return render(res, 'index', {
 				message: 'Please enter the URL to your slides, e.g. http://imakewebthings.com/deck.js/'
 			});
 		}
+
+		return io.createSession(req.body.url, function(err, session) {
+
+			var baseUrl = 'http://' + req.headers.host,
+				urls = {
+					original: req.body.url,
+					viewing: baseUrl + '/deck/'+ session.id +'/',
+					master: baseUrl + '/deck/'+ session.id + '|' + session.masterId +'/'
+				};
+
+			if (err) {
+				return showError(err);
+			}
+
+			async.series([
+				async.apply(shortenUrl, urls.viewing),
+				async.apply(shortenUrl, urls.master)
+			], function(err, results) {
+				if (!err) {
+					urls.viewing = results[0];
+					urls.master = results[1];
+				}
+
+				return render(res, 'index', {
+					urls: urls,
+					message: 'Great! Use the URLs below'
+				});
+			});
+
+		});
 
 	});
 

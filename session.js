@@ -47,10 +47,11 @@ Session.prototype.requestPage = function(callback) {
 
 		// TODO: normalize all relative asset urls
 
+		$('head').append(config.mapped_assets.assets.css.viewer);
 		$('body').append(config.mapped_assets.assets.js.viewer);
 		this.page = $.html();
 
-		callback();
+		callback(null, this);
 		
 	}.bind(this));
 };
