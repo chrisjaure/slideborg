@@ -1,5 +1,17 @@
-{message}
-<form action="" method="post">
-	<label>Enter the URL to your slides: <input type="text" name="url" /></label>
-	<button type="submit">Submit</button>
+<form class="center-text" action="" method="post">
+	<p>
+		<label class="info block" for="slide-url">
+		{if message}
+			{message}
+		{else}
+			Enter the URL to your slides
+		{/if}
+		</label>
+		<input id="slide-url" class="large-input" type="text" name="url" value="{urls.original}" />
+		<button class="large-button" type="submit">GO</button>
+	</p>
 </form>
+{if urls}
+	<p>Share <a href="{urls.viewing}" target="_blank">this url</a> with your viewers.</p>
+	<p>Use <a href="{urls.master}" target="_blank">this url</a> to control your slides.</p>
+{/if}

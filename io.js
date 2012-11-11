@@ -47,8 +47,8 @@ IO.listen = function(server) {
 	});
 };
 
-IO.createSession = function(url) {
-	var session = new Session(url, io);
+IO.createSession = function(url, callback) {
+	var session = new Session(url, io, callback);
 	sessions.set(session.id, session);
 	return session;
 };

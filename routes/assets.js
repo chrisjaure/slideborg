@@ -4,7 +4,9 @@ module.exports = function(assets) {
 	var maps = {};
 
 	nap({ assets: assets });
-	nap.package();
+	if (process.env.NODE_ENV == 'production') {
+		nap.package();
+	}
 
 	Object.keys(assets).forEach(function asset_type_loop(type) {
 

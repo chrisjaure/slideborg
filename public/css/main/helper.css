@@ -79,3 +79,7 @@
 .clearfix {
     *zoom: 1;
 }
+
+.center-text {
+    text-align: center;
+}

@@ -5,7 +5,7 @@ var
 	uuid = require('node-uuid'),
 	config = require('./config');
 
-var Session = function(link, io) {
+var Session = function(link, io, callback) {
 	link = url.parse(link);
 	link.hash = null;
 	this.url = url.format(link);
@@ -15,7 +15,7 @@ var Session = function(link, io) {
 	this.masterId = uuid.v4().substr(0,8);
 	this.index = 0;
 
-	this.requestPage();
+	this.requestPage(callback);
 };
 
 Session.prototype.addClient = function(client) {
@@ -30,16 +30,22 @@ Session.prototype.broadcast = function(event, data) {
 	this.io.sockets.in(this.id).emit(event, data);
 };
 
-Session.prototype.requestPage = function() {
+Session.prototype.requestPage = function(callback) {
 	request(this.url, function(err, res, body) {
+
+		if (err) {
+			return callback(err);
+		}
+
 		var $ = cheerio.load(body);
 
 		// TODO: normalize all relative asset urls
 
-		$('body')
-			.append(config.mapped_assets.assets.js.viewer);
-
+		$('body').append(config.mapped_assets.assets.js.viewer);
 		this.page = $.html();
+
+		callback();
+		
 	}.bind(this));
 };
 
