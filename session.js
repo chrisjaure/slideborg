@@ -14,6 +14,7 @@ var Session = function(link, io, callback) {
 	this.id = uuid.v4();
 	this.masterId = uuid.v4().substr(0,8);
 	this.index = 0;
+	this.timestamp = Date.now();
 
 	this.requestPage(callback);
 };
@@ -28,6 +29,11 @@ Session.prototype.getClients = function() {
 
 Session.prototype.broadcast = function(event, data) {
 	this.io.sockets.in(this.id).emit(event, data);
+	this.timestamp = Date.now();
+};
+
+Session.prototype.destroy = function() {
+	this.broadcast('inactive');
 };
 
 Session.prototype.requestPage = function(callback) {

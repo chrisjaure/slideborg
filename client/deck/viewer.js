@@ -52,12 +52,9 @@ socket.on('connect_failed', function() {
 	console.log('failed');
 });
 
-socket.on('announcement', function(message){
-	console.log('Incoming Announcement:' + message);
-});
-
 socket.on('inactive', function(message){
-	console.log('This connection is no longer active.');
+	alert('This viewing session is no longer active :(');
+	socket.disconnect();
 });
 
 function initMaster () {
@@ -67,6 +64,6 @@ function initMaster () {
 }
 
 function initViewer () {
-	socket.on('change', api.goto);
+	socket.on('triggerchange', api.goto);
 	api.goto(data.index);
 }

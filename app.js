@@ -39,5 +39,5 @@ app.use(function(req, res, next){
 });
 
 app.locals(config.mapped_assets);
-app.locals.title = 'Slip N Slide';
+app.locals.title = 'SlickSlide';
 routes.generate(app);

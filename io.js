@@ -4,13 +4,16 @@ var sio = require('socket.io'),
 	sessions = new Map(),
 	io;
 
-// TODO: expire old sessions
-
 var IO = module.exports = {};
 
 IO.listen = function(server) {
+	var expireCheckInMilliseconds = 1200000; // 20 mins
 	io = sio.listen(server);
+	IO.setup();
+	setInterval(IO.expireSessions, expireCheckInMilliseconds);
+};
 
+IO.setup = function() {
 	io.sockets.on('connection', function(socket) {
 
 		socket.on('subscribe', function(data) {
@@ -20,14 +23,13 @@ IO.listen = function(server) {
 
 			if (session) {
 				console.log("Client connected to room: "+ data.room);
-				session.broadcast("announcement", "Client Connected");
 				socket.join(data.room);
 
 				if (session.isMaster(data.masterId)) {
 					master = true;
 					socket.on('change', function(index) {
 						session.index = index;
-						session.broadcast('change', index);
+						session.broadcast('triggerchange', index);
 					});
 				}
 
@@ -37,9 +39,7 @@ IO.listen = function(server) {
 				});
 			}
 			else {
-				console.log("Session "+ data.room +" session is no longer active.");
 				socket.emit('inactive');
-				socket.disconnect();
 			}
 
 		});
@@ -55,4 +55,18 @@ IO.createSession = function(url, callback) {
 
 IO.getSession = function(id) {
 	return sessions.get(id);
+};
+
+IO.expireSessions = function() {
+	var
+		now = Date.now(),
+		durationInMilliseconds = 1800000; // half-hour
+
+	sessions.forEach(function(session, id) {
+		if (now - session.timestamp > durationInMilliseconds) {
+			console.log('Removing expired session %s', id);
+			session.destroy();
+			sessions.delete(id);
+		}
+	});
 };

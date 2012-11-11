@@ -4264,14 +4264,17 @@ if (typeof define === "function" && define.amd) {
 })();
 });
 
-require.define("/client/deck/reveal.js",function(require,module,exports,__dirname,__filename,process,global){module.exports = {
-	goto: function(index) {
-		Reveal.slide.apply(Reveal, index);
-	},
+require.define("/client/deck/impress.js",function(require,module,exports,__dirname,__filename,process,global){var
+	impress_api = impress(),
+	index = 0;
+
+module.exports = {
+	goto: impress_api.goto,
 	onChange: function(fn) {
-		Reveal.addEventListener('slidechanged', function(e) {
-			fn([e.indexh, e.indexv]);
-		});
+		document.addEventListener('impress:stepenter', function(e) {
+			index = [].slice.call(document.querySelectorAll('.step')).indexOf(e.target);
+			fn(index);
+		}, false);
 	}
 };
 });
@@ -4288,17 +4291,14 @@ require.define("/client/deck/deck.js",function(require,module,exports,__dirname,
 };
 });
 
-require.define("/client/deck/impress.js",function(require,module,exports,__dirname,__filename,process,global){var
-	impress_api = impress(),
-	index = 0;
-
-module.exports = {
-	goto: impress_api.goto,
+require.define("/client/deck/reveal.js",function(require,module,exports,__dirname,__filename,process,global){module.exports = {
+	goto: function(index) {
+		Reveal.slide.apply(Reveal, index);
+	},
 	onChange: function(fn) {
-		document.addEventListener('impress:stepenter', function(e) {
-			index = [].slice.call(document.querySelectorAll('.step')).indexOf(e.target);
-			fn(index);
-		}, false);
+		Reveal.addEventListener('slidechanged', function(e) {
+			fn([e.indexh, e.indexv]);
+		});
 	}
 };
 });
@@ -4357,12 +4357,9 @@ socket.on('connect_failed', function() {
 	console.log('failed');
 });
 
-socket.on('announcement', function(message){
-	console.log('Incoming Announcement:' + message);
-});
-
 socket.on('inactive', function(message){
-	console.log('This connection is no longer active.');
+	alert('This viewing session is no longer active :(');
+	socket.disconnect();
 });
 
 function initMaster () {
@@ -4372,7 +4369,7 @@ function initMaster () {
 }
 
 function initViewer () {
-	socket.on('change', api.goto);
+	socket.on('triggerchange', api.goto);
 	api.goto(data.index);
 }
 });
