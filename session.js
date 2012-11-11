@@ -34,7 +34,6 @@ Session.prototype.requestPage = function() {
 		// TODO: normalize all relative asset urls
 
 		$('body')
-			.append('<script src="http://yui.yahooapis.com/3.7.3/build/yui/yui-min.js"></script>')
 			.append(config.mapped_assets.assets.js.viewer);
 
 		this.page = $.html();

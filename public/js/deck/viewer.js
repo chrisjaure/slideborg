@@ -4264,93 +4264,108 @@ if (typeof define === "function" && define.amd) {
 })();
 });
 
+require.define("/client/deck/reveal.js",function(require,module,exports,__dirname,__filename,process,global){module.exports = {
+	goto: function(index) {
+		Reveal.slide.apply(Reveal, index);
+	},
+	onChange: function(fn) {
+		Reveal.addEventListener('slidechanged', function(e) {
+			fn([e.indexh, e.indexv]);
+		});
+	}
+};
+});
+
+require.define("/client/deck/deck.js",function(require,module,exports,__dirname,__filename,process,global){module.exports = {
+	goto: function(index) {
+		jQuery.deck('go', index);
+	},
+	onChange: function(fn) {
+		jQuery(document).on('deck.change', function(e, from, to) {
+			fn(to);
+		});
+	}
+};
+});
+
+require.define("/client/deck/impress.js",function(require,module,exports,__dirname,__filename,process,global){var
+	impress_api = impress(),
+	index = 0;
+
+module.exports = {
+	goto: impress_api.goto,
+	onChange: function(fn) {
+		document.addEventListener('impress:stepenter', function(e) {
+			index = [].slice.call(document.querySelectorAll('.step')).indexOf(e.target);
+			fn(index);
+		}, false);
+	}
+};
+});
+
 require.define("/client/deck/viewer.js",function(require,module,exports,__dirname,__filename,process,global){var
 	io = require('../../node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js'),
 
 	api,
-	socket,
-	isMaster = false;
+	socket;
 
-YUI().use('node', 'event', function(Y) {
+api = (function(){
+	// impressjs
+	if (window.impress && impress.supported) {
+		return require('./impress');
+	}
+	// deckjs
+	else if (window.jQuery && jQuery.deck) {
+		return require('./deck');
+	}
+	// revealjs
+	else if (window.Reveal) {
+		return require('./reveal');
+	}
+	// custom api that plugins can write adapters for
+	else if (window.slyncr) {
+		return slyncr;
+	}
+	// fallback to nothing
+	return {
+		goto: function() {},
+		onChange: function() {}
+	};
+})();
 
-	api = (function(){
-		var
-			index = 0,
-			impress_api;
-		// impressjs
-		if (window.impress && impress.supported) {
-			impress_api = impress();
-			return {
-				goto: impress_api.goto,
-				onChange: function(fn) {
-					document.addEventListener('impress:stepenter', function(e) {
-						console.log(e);
-						index = Y.all('.step').indexOf(e.target);
-						fn(index);
-					}, false);
-				}
-			};
-		}
-		// deckjs
-		else if (window.jQuery && jQuery.deck) {
-			return {
-				goto: function(index) {
-					jQuery.deck('go', index);
-				},
-				onChange: function(fn) {
-					jQuery('document').on('deck.change', function(e, from, to) {
-						fn(to);
-					});
-				}
-			};
-		}
-		// custom api that plugins can write adapters for
-		else if (window.slyncr) {
-			return slyncr;
-		}
+socket = io.connect('http://localhost:8000');
 
-		// fallback
-		return {
-			goto: function() {},
-			onChange: function() {}
-		};
-	})();
+socket.on('connect', function() {
+	var room = window.location.pathname.match(/\/deck\/([^\/\|]*)\|?([^\/]*)?\/?/);
+	if (room[1]) {
+		socket.emit('subscribe', { room: room[1], masterId: room[2] });
+	}
+});
 
-	socket = io.connect('http://localhost:8000');
+socket.on('confirm', function(data) {
 
-	socket.on('connect', function() {
-		var room = window.location.pathname.match(/\/deck\/([^\/\|]*)\|?([^\/]*)?\/?/);
-		if (room[1]) {
-			socket.emit('subscribe', { room: room[1], masterId: room[2] });
-		}
-	});
+	if (data.master) {
+		api.onChange(function(to) {
+			socket.emit('change', to);
+		});
+	}
+	else {
+		socket.on('change', api.goto);
+		api.goto(data.index);
+	}
 
-	socket.on('confirm', function(data) {
+});
 
-		if (data.master) {
-			api.onChange(function(to) {
-				socket.emit('change', to);
-			});
-		}
-		else {
-			socket.on('change', api.goto);
-			api.goto(data.index);
-		}
+socket.on('connect_failed', function() {
+	console.log('failed');
+});
 
-	});
+socket.on('announcement', function(message){
+	console.log('Incoming Announcement:' + message);
+});
 
-	socket.on('connect_failed', function() {
-		console.log('failed');
-	});
-
-	socket.on('announcement', function(message){
-		console.log('Incoming Announcement:' + message);
-	});
-
-	socket.on('inactive', function(message){
-		console.log('This connection is no longer active.');
-	});
-
+socket.on('inactive', function(message){
+	console.log('This connection is no longer active.');
 });
 });
 require("/client/deck/viewer.js");
