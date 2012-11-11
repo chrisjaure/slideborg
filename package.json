@@ -1,6 +1,6 @@
 {
   "name": "nko3-view-the-source-luke",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "View the Source, Luke",
   "main": "server.js",
   "scripts": {
