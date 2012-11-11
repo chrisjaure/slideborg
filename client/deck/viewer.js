@@ -8,23 +8,24 @@ var
 YUI().use('node', 'event', function(Y) {
 
 	api = (function(){
-		var index = 0;
+		var
+			index = 0,
+			impress_api;
+		// impressjs
 		if (window.impress && impress.supported) {
-			var impress_api = impress();
+			impress_api = impress();
 			return {
 				goto: impress_api.goto,
 				onChange: function(fn) {
-					Y.one('document').on('keyup', function(e) {
-						if (e.keyCode == 37) {
-							fn(--index);
-						}
-						else if (e.keyCode == 39) {
-							fn(++index);
-						}
-					});
+					document.addEventListener('impress:stepenter', function(e) {
+						console.log(e);
+						index = Y.all('.step').indexOf(e.target);
+						fn(index);
+					}, false);
 				}
 			};
 		}
+		// deckjs
 		else if (window.jQuery && jQuery.deck) {
 			return {
 				goto: function(index) {
@@ -41,12 +42,12 @@ YUI().use('node', 'event', function(Y) {
 		else if (window.slyncr) {
 			return slyncr;
 		}
-		else {
-			return {
-				goto: function() {},
-				onChange: function() {}
-			};
-		}
+
+		// fallback
+		return {
+			goto: function() {},
+			onChange: function() {}
+		};
 	})();
 
 	socket = io.connect('http://localhost:8000');
