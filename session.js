@@ -45,7 +45,12 @@ Session.prototype.requestPage = function(callback) {
 
 		var $ = cheerio.load(body);
 
-		// TODO: normalize all relative asset urls
+		$('link[rel="stylesheet"],script[src]').each(function(i, el) {
+			var $el = $(el),
+				type = ($el.attr('href') ? 'href' : 'src'),
+				eurl = $el.attr(type);
+			$el.attr(type, encodeURIComponent(url.resolve(this.url, eurl)));
+		}.bind(this));
 
 		$('head').append(config.mapped_assets.assets.css.viewer);
 		$('body').append(config.mapped_assets.assets.js.viewer);

@@ -76,8 +76,15 @@ exports.generate = function(app) {
 			session = io.getSession(parseSessionId(req.params.id)),
 			asset_url;
 		if (session) {
-			// TODO: make sure this url is always right
-			asset_url = session.url + req.url.replace(/\/deck\/[^\/]*\//, '');
+			asset_url = req.url.replace(/\/deck\/[^\/]*\//, '');
+			if (asset_url.match(/^http/)) {
+				// could be a full url that has been encoded
+				asset_url = decodeURIComponent(asset_url);
+			}
+			else {
+				// or a dynamically added script or link
+				asset_url = session.url + asset_url;
+			}
 			req.pipe(request(asset_url)).pipe(res);
 		}
 		else {
