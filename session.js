@@ -48,11 +48,15 @@ Session.prototype.requestPage = function(callback) {
 
 		var $ = cheerio.load(body);
 
+		// rewrite urls that begin with /
 		$('link[rel="stylesheet"],script[src]').each(function(i, el) {
 			var $el = $(el),
 				type = ($el.attr('href') ? 'href' : 'src'),
 				eurl = $el.attr(type);
-			$el.attr(type, encodeURIComponent(url.resolve(this.url, eurl)));
+
+			if (eurl.match(/^\/[^\/]/)) {
+				$el.attr(type, encodeURIComponent(url.resolve(this.url, eurl)));
+			}
 		}.bind(this));
 
 		$('head').append(config.mapped_assets.assets.css.viewer);
