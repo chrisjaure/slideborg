@@ -4345,13 +4345,10 @@ socket.on('connect', function() {
 socket.on('confirm', function(data) {
 
 	if (data.master) {
-		api.onChange(function(to) {
-			socket.emit('change', to);
-		});
+		initMaster();
 	}
 	else {
-		socket.on('change', api.goto);
-		api.goto(data.index);
+		initViewer();
 	}
 
 });
@@ -4367,6 +4364,17 @@ socket.on('announcement', function(message){
 socket.on('inactive', function(message){
 	console.log('This connection is no longer active.');
 });
+
+function initMaster () {
+	api.onChange(function(to) {
+		socket.emit('change', to);
+	});
+}
+
+function initViewer () {
+	socket.on('change', api.goto);
+	api.goto(data.index);
+}
 });
 require("/client/deck/viewer.js");
 })();
