@@ -1,13 +1,17 @@
 var
+	url = require('url'),
 	request = require('request'),
 	cheerio = require('cheerio'),
 	uuid = require('node-uuid'),
 	config = require('./config');
 
-var Session = function(url) {
+var Session = function(link) {
 	this.clients = [];
-	// TODO: normalize url - remove hash, etc.
-	this.url = url;
+	
+	link = url.parse(link);
+	link.hash = null;
+	this.url = url.format(link);
+
 	this.id = uuid.v4();
 	this.masterId = uuid.v4().substr(0,8);
 	this.index = 0;
