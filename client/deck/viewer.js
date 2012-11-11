@@ -28,7 +28,7 @@ api = (function(){
 	};
 })();
 
-socket = io.connect('http://localhost:8000');
+socket = io.connect();
 
 socket.on('connect', function() {
 	var room = window.location.pathname.match(/\/deck\/([^\/\|]*)\|?([^\/]*)?\/?/);
