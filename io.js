@@ -25,10 +25,15 @@ IO.listen = function(server) {
 
 				if (session.isMaster(data.masterId)) {
 					master = true;
+					socket.on('change', function(index) {
+						session.index = index;
+						IO.broadcastToRoom(data.room, 'change', index);
+					});
 				}
 
 				socket.emit('confirm', {
-					master: master
+					master: master,
+					index: session.index
 				});
 			}
 			else {

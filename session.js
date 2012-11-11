@@ -10,6 +10,7 @@ var Session = function(url) {
 	this.url = url;
 	this.id = uuid.v4();
 	this.masterId = uuid.v4().substr(0,8);
+	this.index = 0;
 
 	this.requestPage();
 };

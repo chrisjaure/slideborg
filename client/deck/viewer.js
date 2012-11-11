@@ -14,14 +14,13 @@ api = (function(){
 	}
 	else if (window.jQuery && jQuery.deck) {
 		return {
-			next: function() {
-				jQuery.deck('next');
-			},
-			prev: function() {
-				jQuery.deck('prev');
-			},
 			goto: function(index) {
 				jQuery.deck('go', index);
+			},
+			onChange: function(fn) {
+				jQuery(document).on('deck.change', function(e, from, to) {
+					fn(to);
+				});
 			}
 		};
 	}
@@ -43,7 +42,6 @@ socket = io.connect('http://localhost:8000');
 
 socket.on('connect', function() {
 	var room = window.location.pathname.match(/\/deck\/([^\/\|]*)\|?([^\/]*)?\/?/);
-	console.log(room);
 	if (room[1]) {
 		socket.emit('subscribe', { room: room[1], masterId: room[2] });
 	}
@@ -51,16 +49,15 @@ socket.on('connect', function() {
 
 socket.on('confirm', function(data) {
 
-	console.log(data);
-
 	if (data.master) {
-
+		api.onChange(function(to) {
+			socket.emit('change', to);
+		});
 	}
 	else {
-		socket.on('next', api.next);
-		socket.on('prev', api.prev);
+		socket.on('change', api.goto);
+		api.goto(data.index);
 	}
-
 
 });
 
