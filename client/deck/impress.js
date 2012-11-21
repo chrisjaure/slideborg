@@ -9,5 +9,6 @@ module.exports = {
 			index = [].slice.call(document.querySelectorAll('.step')).indexOf(e.target);
 			fn(index);
 		}, false);
-	}
+	},
+	type: 'impress.js'
 };

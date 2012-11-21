@@ -8,5 +8,6 @@ module.exports = {
 		Reveal.addEventListener('slidechanged', function(e) {
 			fn([e.indexh, e.indexv]);
 		});
-	}
+	},
+	type: 'reveal.js'
 };

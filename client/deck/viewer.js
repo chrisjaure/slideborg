@@ -17,6 +17,10 @@ api = (function(){
 	else if (window.Reveal) {
 		return require('./reveal');
 	}
+	//speakerdeck
+	else if (window.SpeakerDeck) {
+		return require('./speakerdeck');
+	}
 	// custom api that plugins can write adapters for
 	else if (window.slickslide) {
 		return slickslide;
@@ -24,9 +28,14 @@ api = (function(){
 	// fallback to nothing
 	return {
 		goto: function() {},
-		onChange: function() {}
+		onChange: function() {},
+		type: 'unsupported'
 	};
 })();
+
+if (window.console && console.log) {
+	console.log(api);
+}
 
 socket = io.connect();
 

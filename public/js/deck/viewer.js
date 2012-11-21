@@ -4275,7 +4275,8 @@ module.exports = {
 			index = [].slice.call(document.querySelectorAll('.step')).indexOf(e.target);
 			fn(index);
 		}, false);
-	}
+	},
+	type: 'impress.js'
 };
 });
 
@@ -4287,7 +4288,8 @@ require.define("/client/deck/deck.js",function(require,module,exports,__dirname,
 		jQuery(document).on('deck.change', function(e, from, to) {
 			fn(to);
 		});
-	}
+	},
+	type: 'deck.js'
 };
 });
 
@@ -4301,8 +4303,50 @@ require.define("/client/deck/reveal.js",function(require,module,exports,__dirnam
 		Reveal.addEventListener('slidechanged', function(e) {
 			fn([e.indexh, e.indexv]);
 		});
-	}
+	},
+	type: 'reveal.js'
 };
+});
+
+require.define("/client/deck/speakerdeck.js",function(require,module,exports,__dirname,__filename,process,global){module.exports = {
+	goto: function(index) {
+		getApi(function(cw) {
+			cw.postMessage('["goToSlide","'+index+'"]', 'http://speakerdeck.com');
+		});
+	},
+	onChange: function(fn) {
+		window.addEventListener('message', function(e) {
+			console.log(e);
+			var res = JSON.parse(e.data);
+			if (res[0] == 'change') {
+				fn(res[1].number);
+			}
+		});
+	},
+	type: 'speakerdeck'
+};
+
+function getApi (fn) {
+	var iframe;
+
+	if (this.contentWindow) {
+		return fn(this.contentWindow);
+	}
+
+	(function findIframe() {
+		iframe = document.querySelector('.speakerdeck-iframe');
+		if (!iframe) {
+			return setTimeout(findIframe, 100);
+		}
+
+		this.contentWindow = iframe.contentWindow;
+		if (!this.contentWindow) {
+			return setTimeout(findIframe, 100);
+		}
+
+		return fn(this.contentWindow);
+	})();
+}
 });
 
 require.define("/client/deck/viewer.js",function(require,module,exports,__dirname,__filename,process,global){var
@@ -4324,6 +4368,10 @@ api = (function(){
 	else if (window.Reveal) {
 		return require('./reveal');
 	}
+	//speakerdeck
+	else if (window.SpeakerDeck) {
+		return require('./speakerdeck');
+	}
 	// custom api that plugins can write adapters for
 	else if (window.slickslide) {
 		return slickslide;
@@ -4331,9 +4379,14 @@ api = (function(){
 	// fallback to nothing
 	return {
 		goto: function() {},
-		onChange: function() {}
+		onChange: function() {},
+		type: 'unsupported'
 	};
 })();
+
+if (window.console && console.log) {
+	console.log(api);
+}
 
 socket = io.connect();
 
