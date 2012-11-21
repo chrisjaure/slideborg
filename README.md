@@ -1,67 +1,23 @@
-# Hello View the Source, Luke!
+SlickSlide
+==========
 
-## Deploy instructions
+Sync your slides simply. No plugins or bookmarklets needed!
 
-### GitHub — [Team][2], [Repo][3]
+This is designed to be run as a service, but you're free to host your own server.
 
-~~~sh
-git clone git@github.com:nko3/view-the-source-luke.git
-~~~
+Documentation
+-------------
 
-### Nodejitsu — [More details][5], [Handbook][4]
+Coming soon!
 
-~~~sh
-npm install -g jitsu
-jitsu login --username nko3-view-the-source-luke --password AYQ8HYNQ84c5L81v
-jitsu deploy
-~~~
 
-## Tips
+License
+-------
 
-### Vote KO Widget
+Copyright (c) 2012 Chris Jaure
 
-![Vote KO widget](http://f.cl.ly/items/1n3g0W0F0G3V0i0d0321/Screen%20Shot%202012-11-04%20at%2010.01.36%20AM.png)
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-Use our "Vote KO" widget to let from your app directly. Here's the code for
-including it in your site:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-~~~html
-<iframe src="http://nodeknockout.com/iframe/view-the-source-luke" frameborder=0 scrolling=no allowtransparency=true width=115 height=25>
-</iframe>
-~~~
-
-### Tutorials & Free Services
-
-If you're feeling a bit lost about how to get started or what to use, we've
-got some [great resources for you](http://nodeknockout.com/resources).
-
-First, we've pulled together a great set of tutorials about some of node's
-best and most useful libraries:
-
-* [How to install node and npm](http://blog.nodeknockout.com/post/33857791331/how-to-install-node-npm)
-* [Getting started with Express](http://blog.nodeknockout.com/post/34180474119/getting-started-with-express)
-* [Real-time communication with Socket.IO](http://blog.nodeknockout.com/post/34243127010/knocking-out-socket-io)
-* [Data persistence with Mongoose](http://blog.nodeknockout.com/post/34302423628/getting-started-with-mongoose)
-* [OAuth integration using Passport](http://blog.nodeknockout.com/post/34765538605/getting-started-with-passport)
-* [Debugging with Node Inspector](http://blog.nodeknockout.com/post/34843655876/debugging-with-node-inspector)
-* [and many more](http://nodeknockout.com/resources#tutorials)&hellip;
-
-Also, we've got a bunch of great free services provided by sponsors,
-including:
-
-* [MongoLab](http://nodeknockout.com/resources#mongolab) - for Mongo hosting
-* [Monitaur](http://nodeknockout.com/resources#monitaur) - for server monitoring
-* [Ratchet.io](http://nodeknockout.com/resources#ratchetio) - for exception tracking
-* [Teleportd](http://nodeknockout.com/resources#teleportd) - real-time photo streams
-* [and more](http://nodeknockout.com/resources#tutorials)&hellip;
-
-## Have fun!
-
-If you have any issues, we're on IRC in #nodeknockout and #nodejitsu on
-freenode, email us at <all@nodeknockout.com>, or tweet
-[@node_knockout](https://twitter.com/node_knockout).
-
-[2]: https://github.com/organizations/nko3/teams/280612
-[3]: https://github.com/nko3/view-the-source-luke
-[4]: http://handbook.jit.su
-[5]: http://blog.nodeknockout.com/post/35279199042/introduction-to-jitsu-deployment
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
