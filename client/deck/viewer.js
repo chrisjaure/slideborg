@@ -21,6 +21,10 @@ api = (function(){
 	else if (window.SpeakerDeck) {
 		return require('./speakerdeck');
 	}
+	//slideshare
+	else if(jQuery && jQuery.slideshareEventManager) {
+		return require('./slideshare');
+	}
 	// custom api that plugins can write adapters for
 	else if (window.slickslide) {
 		return slickslide;

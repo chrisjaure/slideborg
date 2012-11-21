@@ -4316,7 +4316,6 @@ require.define("/client/deck/speakerdeck.js",function(require,module,exports,__d
 	},
 	onChange: function(fn) {
 		window.addEventListener('message', function(e) {
-			console.log(e);
 			var res = JSON.parse(e.data);
 			if (res[0] == 'change') {
 				fn(res[1].number);
@@ -4349,6 +4348,19 @@ function getApi (fn) {
 }
 });
 
+require.define("/client/deck/slideshare.js",function(require,module,exports,__dirname,__filename,process,global){module.exports = {
+	goto: function(index) {
+		$.slideshareEventManager.trigger('gotoslide', {index: index});
+	},
+	onChange: function(fn) {
+		$.slideshareEventManager.player.on('slidechanged', function(e) {
+			fn(e.ssData.index);
+		});
+	},
+	type: 'slideshare'
+};
+});
+
 require.define("/client/deck/viewer.js",function(require,module,exports,__dirname,__filename,process,global){var
 	io = require('../../node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js'),
 
@@ -4371,6 +4383,10 @@ api = (function(){
 	//speakerdeck
 	else if (window.SpeakerDeck) {
 		return require('./speakerdeck');
+	}
+	//slideshare
+	else if(jQuery && jQuery.slideshareEventManager) {
+		return require('./slideshare');
 	}
 	// custom api that plugins can write adapters for
 	else if (window.slickslide) {
