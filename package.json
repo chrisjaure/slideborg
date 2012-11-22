@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "build": "./build.sh",
-    "dev-build": "./build.sh -w"
+    "dev": "node-dev server & ./build.sh -w && fg"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
   },
   "subdomain": "view-the-source-luke.nko3",
   "devDependencies": {
-    "browserify": "~1.16.3"
+    "browserify": "~1.16.3",
+    "node-dev": "~0.2.9"
   }
 }
