@@ -1,15 +1,21 @@
 SlickSlide
 ==========
 
-Sync your slides simply. No plugins or bookmarklets needed!
+Sync your slides simply. No plugins or scripts needed!
 
 This is designed to be run as a service, but you're free to host your own server.
 
-Documentation
--------------
+Development
+-----------
 
-Coming soon!
+To start a handy dev mode do:
+```
+npm run dev
+```
 
+This will restart the server when any changes are detected as well as rebuild /public/js/deck/viewer.js when you change files it's composed of.
+
+If you're not running dev mode and change anything related to /public/js/deck/viewer.js, do `npm run build` before committing.
 
 License
 -------
