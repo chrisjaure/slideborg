@@ -3,7 +3,8 @@ var
 	request = require('request'),
 	cheerio = require('cheerio'),
 	uuid = require('node-uuid'),
-	config = require('./config');
+	config = require('./config'),
+	assets = require('./routes/assets');
 
 var Session = function(link, io, callback) {
 	link = url.parse(link);
@@ -59,8 +60,8 @@ Session.prototype.requestPage = function(callback) {
 			}
 		}.bind(this));
 
-		$('head').append(config.mapped_assets.assets.css.viewer);
-		$('body').append(config.mapped_assets.assets.js.viewer);
+		$('head').append(assets.css('viewer'));
+		$('body').append(assets.js('viewer'));
 		this.page = $.html();
 
 		callback(null, this);

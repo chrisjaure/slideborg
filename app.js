@@ -5,8 +5,8 @@
 var
 	express = require('express'),
 	nunjucks = require('nunjucks'),
-	nap = require('nap'),
 	routes = require('./routes'),
+	assets = require('./routes/assets'),
 	path = require('path'),
 	config = require('./config'),
 
@@ -14,14 +14,6 @@ var
 	env = new nunjucks.Environment(new nunjucks.FileSystemLoader(config.views));
 
 app = module.exports = express();
-
-nap({
-	assets: config.assets
-});
-
-if (app.get('env') == 'production') {
-	nap.package();
-}
 
 app.set('port', config.port);
 env.express(app);
@@ -46,5 +38,5 @@ app.use(function(req, res, next){
 });
 
 app.locals.title = 'SlickSlide';
-app.locals.nap = nap;
+app.locals.assets = assets;
 routes.generate(app);
