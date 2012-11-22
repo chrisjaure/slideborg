@@ -21,8 +21,8 @@ env.express(app);
 app.use(express.favicon(__dirname + '/public/favicon.ico', { maxAge: 2592000000 }));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(app.router);
 app.use(express.static(config.statics));
+app.use(app.router);
 
 // 404 catchall, order matters
 app.use(function(req, res, next){

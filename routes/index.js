@@ -1,6 +1,7 @@
 var
 	fs = require('fs'),
 	path = require('path'),
+	url = require('url'),
 	querystring = require('querystring'),
 	cheerio = require('cheerio'),
 	request = require('request'),
@@ -73,21 +74,15 @@ exports.generate = function(app) {
 
 	// TODO: provide a remote url
 
-	// proxy all relative asset requests
-	app.get('/deck/:id/*', function(req, res, next) {
+	// proxy all asset requests
+	app.get('*', function(req, res, next) {
 		var
-			session = io.getSession(parseSessionId(req.params.id)),
+			match = (req.headers.referer || '').match(/\/deck\/([a-f0-9\-\|]*)\//),
+			session = (match && match[1]) ? io.getSession(parseSessionId(match[1])) : null,
 			asset_url;
+
 		if (session) {
-			asset_url = req.url.replace(/\/deck\/[^\/]*\//, '');
-			if (asset_url.match(/^http/)) {
-				// could be a full url that has been encoded
-				asset_url = decodeURIComponent(asset_url);
-			}
-			else {
-				// or a dynamically added script or link
-				asset_url = session.url + asset_url;
-			}
+			asset_url = url.resolve(session.url, req.url.replace(match[0], ''));
 			req.pipe(request(asset_url)).pipe(res);
 		}
 		else {

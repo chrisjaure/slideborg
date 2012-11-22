@@ -56,7 +56,7 @@ Session.prototype.requestPage = function(callback) {
 				eurl = $el.attr(type);
 
 			if (eurl.match(/^\/[^\/]/)) {
-				$el.attr(type, encodeURIComponent(url.resolve(this.url, eurl)));
+				$el.attr(type, '/deck/'+this.id+eurl);
 			}
 		}.bind(this));
 
