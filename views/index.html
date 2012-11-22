@@ -1,19 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
 <form class="center-text" action="" method="post">
 	<p>
 		<label class="info block" for="slide-url">
-		{if message}
-			{message}
-		{else}
+		{% if message %}
+			{{ message }}
+		{% else %}
 			Enter the URL to your slide deck or try <a id="insert-demo" href="#">reveal.js</a>.
-		{/if}
+		{% endif %}
 		</label>
-		<input id="slide-url" class="large-input" type="text" name="url" value="{urls.original}" />
+		<input id="slide-url" class="large-input" type="text" name="url" value="{{ urls.original }}" />
 		<button class="large-button" type="submit">GO</button>
 	</p>
 </form>
-{if urls}
+{% if urls %}
 	<div class="share-links">
-		<p>Share <a href="{urls.viewing}" target="_blank">this url</a> with your viewers.</p>
-		<p>Use <a href="{urls.master}" target="_blank">this url</a> to control your slides.</p>
+		<p>Share <a href="{{ urls.viewing }}" target="_blank">this url</a> with your viewers.</p>
+		<p>Use <a href="{{ urls.master }}" target="_blank">this url</a> to control your slides.</p>
 	</div>
-{/if}
+{% endif %}
+{% endblock %}

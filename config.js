@@ -1,10 +1,6 @@
-var
-	path = require('path'),
-	map_assets = require('./routes/assets'),
+var path = require('path');
 
-	config;
-
-config = module.exports = {
+module.exports = {
 	port: process.env.PORT || 8000,
 	statics: path.join(__dirname, 'public'),
 	views: path.join(__dirname, 'views'),
@@ -19,5 +15,3 @@ config = module.exports = {
 		}
 	}
 };
-
-config.mapped_assets = map_assets(config.assets);

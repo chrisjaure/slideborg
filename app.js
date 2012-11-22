@@ -4,20 +4,27 @@
 
 var
 	express = require('express'),
-	cons = require('consolidate'),
+	nunjucks = require('nunjucks'),
+	nap = require('nap'),
 	routes = require('./routes'),
 	path = require('path'),
 	config = require('./config'),
-	map_assets = require('./routes/assets'),
 
-	app;
+	app,
+	env = new nunjucks.Environment(new nunjucks.FileSystemLoader(config.views));
 
 app = module.exports = express();
 
+nap({
+	assets: config.assets
+});
+
+if (app.get('env') == 'production') {
+	nap.package();
+}
+
 app.set('port', config.port);
-app.set('views', config.views);
-app.engine('html', cons.whiskers);
-app.set('view engine', 'html');
+env.express(app);
 
 app.use(express.favicon(__dirname + '/public/favicon.ico', { maxAge: 2592000000 }));
 app.use(express.bodyParser());
@@ -38,6 +45,6 @@ app.use(function(req, res, next){
 
 });
 
-app.locals(config.mapped_assets);
 app.locals.title = 'SlickSlide';
+app.locals.nap = nap;
 routes.generate(app);

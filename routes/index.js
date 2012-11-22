@@ -13,13 +13,13 @@ var
 exports.generate = function(app) {
 
 	app.get('/', function(req, res) {
-		return render(res, 'index');
+		return res.render('index.html');
 	});
 
 	app.post('/', function(req, res) {
 
 		if (!req.body.url) {
-			return render(res, 'index', {
+			return res.render('index.html', {
 				message: 'Please enter the URL to your slides, e.g. http://imakewebthings.com/deck.js/'
 			});
 		}
@@ -34,7 +34,7 @@ exports.generate = function(app) {
 				};
 
 			if (err) {
-				return showError(err);
+				return res.render('index.html', showError(err));
 			}
 
 
@@ -49,7 +49,7 @@ exports.generate = function(app) {
 
 				session.setUrls(urls);
 				
-				return render(res, 'index', {
+				return res.render('index.html', {
 					urls: urls,
 					message: 'Great! Use the URLs below'
 				});
@@ -97,20 +97,14 @@ exports.generate = function(app) {
 
 };
 
-function render (res, body, locals) {
-	locals = locals || {};
-	locals.body = fs.readFileSync(path.join(config.views, body + '.html'), 'utf8');
-	res.render('layout', locals);
-}
-
 function parseSessionId (id) {
 	return id.split('|')[0];
 }
 
 function showError (err) {
-	return render(res, 'index', {
+	return {
 		message: "Hmm, something's not quite right... ("+ err.message +")"
-	});
+	};
 }
 
 function shortenUrl (url, callback) {

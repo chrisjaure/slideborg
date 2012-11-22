@@ -4,14 +4,14 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
-	<title>{title}</title>
-	{assets.css.main}
+	<title>{{ title }}</title>
+	{{ nap.css('main') }}
 	<link href='http://fonts.googleapis.com/css?family=Montserrat+Alternates' rel='stylesheet' type='text/css'>
 </head>
-<body class="{classes.body}">
+<body class="{{ classes.body }}">
 	<header class="main-header dark clearfix">
 		<div class="wrapper">
-			<h1 class="logotype">SlickSlide <div class="iframe-wrapper"><iframe src="http://nodeknockout.com/iframe/view-the-source-luke" frameborder="0" scrolling="no" allowtransparency=true width="115" height="25"></iframe></div></h1>
+			<h1 class="logotype">SlickSlide</h1>
 			<nav>
 				
 			</nav>
@@ -20,7 +20,7 @@
 
 	<article class="main-section clearfix" role="main">
 		<div class="wrapper">
-			{>body}
+			{% block body %}{% endblock %}
 		</div>
 	</article>
 
@@ -47,6 +47,6 @@
 			<p>Crafted by <a href="http://nodeknockout.com/teams/view-the-source-luke">Team View the Source, Luke</a>.</p>
 		</div>
 	</footer>
-	{assets.js.main}
+	{{ nap.js('main') }}
 </body>
 </html>
