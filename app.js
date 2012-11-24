@@ -37,6 +37,6 @@ app.use(function(req, res, next){
 
 });
 
-app.locals.title = 'SlickSlide';
+app.locals.title = 'Slideborg';
 app.locals.assets = assets;
 routes.generate(app);

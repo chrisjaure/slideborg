@@ -4389,8 +4389,8 @@ api = (function(){
 		return require('./slideshare');
 	}
 	// custom api that plugins can write adapters for
-	else if (window.slickslide) {
-		return slickslide;
+	else if (window.slideborg) {
+		return slideborg;
 	}
 	// fallback to nothing
 	return {
@@ -4423,7 +4423,7 @@ socket.on('confirm', function(data) {
 	}
 
 	setTimeout(function() {
-		document.getElementById('slickslide').className = 'connected';
+		document.getElementById('slideborg').className = 'connected';
 		updateClientCount(data.count);
 	}, 100);
 
@@ -4434,7 +4434,7 @@ socket.on('connect_failed', function() {
 });
 
 socket.on('inactive', function(message){
-	var container = document.getElementById('slickslide');
+	var container = document.getElementById('slideborg');
 	socket.disconnect();
 	if (container) {
 		container.className = '';
@@ -4463,9 +4463,9 @@ function createNotifier (master) {
 		container = document.createElement('div'),
 		html = '';
 
-	html += '<span id="slickslide-client-count">0</span>';
+	html += '<span id="slideborg-client-count">0</span>';
 
-	container.id = 'slickslide';
+	container.id = 'slideborg';
 	container.innerHTML = html;
 
 	document.body.appendChild(container);
@@ -4480,19 +4480,19 @@ function createDropdown (urls) {
 		container = document.createElement('div'),
 		html = '';
 
-	html += '<div id="slickslide-dropdown-inner"><ul>' +
+	html += '<div id="slideborg-dropdown-inner"><ul>' +
 				'<li><a href="'+urls.viewing+'">Viewing URL</a></li>' +
 				'<li><a href="'+urls.master+'">Master URL</a></li>' +
 			'</ul></div>';
 
-	container.id = 'slickslide-dropdown';
+	container.id = 'slideborg-dropdown';
 	container.innerHTML = html;
 
-	document.getElementById('slickslide').appendChild(container);
+	document.getElementById('slideborg').appendChild(container);
 }
 
 function updateClientCount (count) {
-	document.getElementById('slickslide-client-count').innerHTML = count;
+	document.getElementById('slideborg-client-count').innerHTML = count;
 }
 });
 require("/client/deck/viewer.js");

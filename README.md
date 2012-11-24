@@ -1,5 +1,5 @@
-SlickSlide
-==========
+Slideborg
+=========
 
 Sync your slides simply. No plugins or scripts needed!
 

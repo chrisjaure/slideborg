@@ -1,7 +1,7 @@
 {
-  "name": "nko3-view-the-source-luke",
+  "name": "slideborg",
   "version": "0.0.5",
-  "description": "View the Source, Luke",
+  "description": "Sync your slides simply.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:nko3/view-the-source-luke.git"
+    "url": "git@github.com:chrisjaure/slideborg.git"
   },
   "dependencies": {
     "express": "~3.0.2",
@@ -23,12 +23,15 @@
     "smap": "~0.1.1",
     "nunjucks": "~0.1.6"
   },
-  "engines": {
-    "node": "0.8.x"
-  },
-  "subdomain": "view-the-source-luke.nko3",
   "devDependencies": {
     "browserify": "~1.16.3",
     "node-dev": "~0.2.9"
-  }
+  },
+  "engines": {
+    "node": "0.8.x"
+  },
+  "subdomain": "slideborg",
+  "domains": [
+    "www.slideborg.com"
+  ]
 }

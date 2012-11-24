@@ -1,4 +1,4 @@
-#slickslide {
+#slideborg {
 	position: fixed;
 	top: 10px;
 	right: 10px;
@@ -11,19 +11,19 @@
 	font-size: 9px;
 }
 
-#slickslide.connected {
+#slideborg.connected {
 	background: #92FF93
 }
 
-#slickslide-client-count {
+#slideborg-client-count {
 	cursor: default;
 }
 
-#slickslide-dropdown {
+#slideborg-dropdown {
 	position: relative;
 }
 
-#slickslide-dropdown-inner {
+#slideborg-dropdown-inner {
 	display: none;
 	position: absolute;
 	right: 100%;
@@ -35,17 +35,17 @@
 	padding: 5px;
 	width: 100px;
 }
-#slickslide-dropdown-inner ul,
-#slickslide-dropdown-inner li {
+#slideborg-dropdown-inner ul,
+#slideborg-dropdown-inner li {
 	list-style: none;
 	padding:0;
 	margin:0;
 }
 
-#slickslide-dropdown-inner a {
+#slideborg-dropdown-inner a {
 	font-weight: bold;
 }
 
-#slickslide:hover #slickslide-dropdown-inner {
+#slideborg:hover #slideborg-dropdown-inner {
 	display: block;
 }
