@@ -7,7 +7,9 @@ nap({
 });
 
 if (process.env.NODE_ENV == 'production') {
-	nap.package();
+	// commenting this out for now because nap has bad dep
+	// management and breaks with latest uglify
+	// nap.package();
 }
 
 module.exports = nap;
