@@ -3,7 +3,6 @@ var
 	config = require('../config');
 
 nap({
-	mode: 'dev', // temporarily force dev mode until nap gets fixed
 	assets: config.assets
 });
 
