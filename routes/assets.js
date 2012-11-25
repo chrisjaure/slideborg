@@ -3,13 +3,12 @@ var
 	config = require('../config');
 
 nap({
+	mode: 'dev', // temporarily force dev mode until nap gets fixed
 	assets: config.assets
 });
 
 if (process.env.NODE_ENV == 'production') {
-	// commenting this out for now because nap has bad dep
-	// management and breaks with latest uglify
-	// nap.package();
+	nap.package();
 }
 
 module.exports = nap;
