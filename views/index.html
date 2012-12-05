@@ -6,10 +6,10 @@
 		{% if message %}
 			{{ message }}
 		{% else %}
-			Enter the URL to your slide deck or try <a id="insert-demo" href="#">reveal.js</a>.
+			Enter the URL to your slide deck.
 		{% endif %}
 		</label>
-		<input id="slide-url" class="large-input" type="text" name="url" value="{{ urls.original }}" />
+		<input id="slide-url" class="large-input" type="text" name="url" value="{{ urls.original }}" autofocus />
 		<button class="large-button" type="submit">GO</button>
 	</p>
 </form>

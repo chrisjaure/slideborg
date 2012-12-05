@@ -5,16 +5,19 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
 	<title>{{ title }}</title>
+	<meta name="viewport" content="width=device-width" />
 	{{ assets.css('main') }}
 	<link href='http://fonts.googleapis.com/css?family=Montserrat+Alternates' rel='stylesheet' type='text/css'>
 </head>
 <body class="{{ classes.body }}">
 	<header class="main-header dark clearfix">
 		<div class="wrapper">
-			<h1 class="logotype">Slideborg</h1>
-			<nav>
-				
-			</nav>
+			<h1>
+				<span class="logotype">
+					Slideborg
+					<img class="logo" src="/img/slideborg-site-export.png">
+				</span>
+			</h1>
 		</div>
 	</header>
 
@@ -26,23 +29,7 @@
 
 	<footer class="main-footer">
 		<div class="wrapper">
-			<h2>What's this then?</h2>
-			<p><strong>Slideborg</strong> is designed for presenters and has a couple use cases:</p>
-			<ul>
-				<li>
-					<p>
-						Say you're at an unconference and you're short a projector, but most everyone has their own laptop or tablet. Share a <strong>Slideborg</strong> url with your audience, and they can view your slide deck while you control it from your own device.
-					</p>
-				</li>
-				<li>
-					<p>
-						This time you're at a conference that <em>has</em> a projector, but you don't want to stand at your laptop to control it. A remote would sure be handy, but you don't have one :( Just load up a <strong>Slideborg</strong> url on your laptop, and control it via your phone or tablet.
-					</p>
-				</li>
-			</ul>
-			<p>There are other possibilities as well! Imagine putting on a remote presentation where no one is in the same location. We hope you enjoy!</p>
-			<h2>What slide decks are supported?</h2>
-			<p>Currently we support <a href="http://imakewebthings.com/deck.js/">deck.js</a>, <a href="http://bartaz.github.com/impress.js/">impress.js</a>, and <a href="http://lab.hakim.se/reveal-js/">reveal.js</a>. Try entering one of those urls above to demo <strong>Slideborg</strong>.</p>
+			<p>Crafted by <a href="http://twitter.com/chrisjaure">@chrisjaure</a></p>
 		</div>
 	</footer>
 	{{ assets.js('main') }}
