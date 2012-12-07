@@ -3,6 +3,10 @@
 	Author: Chris Jaure
 	========================================================================= */
 
+html {
+	background: #fff;
+}
+
 h1,
 h2,
 h3 {
@@ -10,8 +14,9 @@ h3 {
 }
 
 h1 {
-	font-size: 2em;
-	/* letter-spacing: -0.1em; */
+	font-size: 4em;
+	margin: 0;
+	letter-spacing: -0.05em; 
 }
 
 h2 {
@@ -26,7 +31,7 @@ ul,ol {
 }
 
 .dark {
-	background: #333;
+	background: #111 url(/img/rebel.png);
 	color: #fff;
 }
 
@@ -35,67 +40,41 @@ ul,ol {
 }
 
 .wrapper {
-	max-width: 60em;
+	max-width: 50em;
 	margin: 0 auto;
+	height: 100%;
 	position: relative;
-	padding: 0 2em;
 }
 
 .main-header {
-	
-}
-
-.iframe-wrapper {
-	padding: 5px;
-	border-radius: 5px;
-	display: inline-block;
-	line-height: 0;
-	margin-left: 0.5em;
-}
-.dark .iframe-wrapper {
-	background-color:#fff;
+	height: 100px;
+	border-bottom: solid 1px #999;
 }
 
 .logotype {
-	font-size: 3em;
-	margin:0.2em 0 0;
+	position: absolute;
+	bottom: -0.2em;
+	left: 50%;
+	margin-left: -3em;
+	text-transform: uppercase;
+	line-height: 1;
 }
-.logotype a {
-	text-decoration: none;
-}
-
-.main-nav {
-	margin-bottom: 1em;
-	font-size: 1.2em;
-}
-.main-nav li {
-	margin-bottom: 0.4em;
-}
-.main-nav a {
-	text-decoration: none;
-	font-weight: bold;
-	background: #555;
-	padding:0 0.2em;
-}
-.main-nav a:hover,
-.main-nav .active,
-.main-nav .active:hover {
-	border-left: solid 0.2em #f0f;
-}
-.main-nav .active,
-.main-nav .active:hover {
-	cursor: default;
-	border-left-width: 0.6em;
+.logo {
+	position: absolute;
+	left: -108px;
+	top: -34px;
 }
 
-.main-section {
-	padding: 2em 0;
-	background: url(/img/striped_lens.png);
-	box-shadow: inset 0 0 10px rgba(0,0,0,0.3), inset 0 0 2px rgba(0,0,0,0.6);
+.main-section .wrapper {
+	box-shadow: 0 6px 5px -5px rgba(0,0,0,0.3);
+	padding: 4em 0;
+	border-bottom: solid 1px #ccc;
 }
 
 .main-footer {
-	border-top: solid 0.6em #333;
+	text-align: center;
+	margin-top: 3em;
+	color: #555;
 }
 
 .info {
@@ -109,35 +88,45 @@ ul,ol {
 }
 
 input[type="text"] {
-	border-radius: 4px;
-	border: solid 1px #aaa;
-	box-shadow: inset 1px 1px 1px rgba(0,0,0,0.1);
+	border-radius: 5px;
+	border: solid 1px #222;
+	box-shadow: inset -1px 1px 3px rgba(0,0,0,0.75);
+	background: #333;
+	color: #eee;
 }
 
 button {
-	border-radius: 4px;
-	border: solid 1px #aaa;
-	box-shadow: inset 0 0 1px #fff;
-	background: #ffffff; /* Old browsers */
-	background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #ededed 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* W3C */
+	border-radius: 5px;
+	border: solid 1px;
+	border-color: #D70A39 #C90834 #9A0023 #9A0023;
+	color: #eee;
+	font-weight: bold;
+	background: #a90329; /* Old browsers */
+	background: -moz-linear-gradient(top,  #a90329 0%, #8f0222 44%, #6d0019 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a90329), color-stop(44%,#8f0222), color-stop(100%,#6d0019)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C */
 }
 button:hover {
 	box-shadow: inset 0 0 1px 1px #FF9B00;
+	border-color: #FF9B00;
 }
 button:active {
-	box-shadow: inset 0 0 1px 1px #006BFF;
+	box-shadow: inset 0 0 1px 1px #00B0FF;
+	border-color: #00B0FF;
 }
 
 .large-input {
 	font-size: 1.2em;
-	width: 75%;
+	width: 65%;
 	box-sizing: border-box;
 	padding: 0.5em;
+}
+
+.large-input:focus {
+	box-shadow: 0 0 4px #005AA7;
 }
 
 .large-button {
@@ -157,4 +146,24 @@ button:active {
 	box-sizing: border-box;
 	margin: 0 auto;
 	font-weight: bold;
+}
+
+@media (max-width: 50em) {
+	h1 {
+		font-size: 2em; 
+	}
+	.main-header {
+		height: 50px;
+	}
+	.logotype {
+		margin-left: -2.5em;
+	}
+	.logo {
+		width: 54px;
+		left: -55px;
+		top: -15px;
+	}
+	.main-section .wrapper {
+		padding: 2em 0;
+	}
 }
