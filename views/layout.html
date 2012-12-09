@@ -7,6 +7,9 @@
 	<title>{{ title }}</title>
 	<meta name="viewport" content="width=device-width" />
 	{{ assets.css('main') }}
+	<script>
+		;("header footer section aside nav article figure figcaption hgroup time").replace(/\w+/g,function(a){document.createElement(a)});
+	</script>
 </head>
 <body class="{{ classes.body }}">
 	<header class="main-header dark clearfix">
