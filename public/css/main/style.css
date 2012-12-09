@@ -7,11 +7,6 @@ html {
 	background: #fff;
 }
 
-h1,
-h2,
-h3 {
-}
-
 h1 {
 	font-size: 4em;
 	margin: 0;
@@ -21,7 +16,8 @@ h1 {
 h2 {
 	font-size: 1.6em;
 	border-bottom: solid 1px #ccc;
-	font-weight: normal;
+	font-weight: bold;
+	letter-spacing: -0.05em;
 }
 
 ul,ol {
@@ -44,6 +40,10 @@ ul,ol {
 	margin: 0 auto;
 	height: 100%;
 	position: relative;
+}
+
+.content {
+	padding:0 2em;
 }
 
 .main-header {

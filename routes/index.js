@@ -30,7 +30,7 @@ exports.generate = function(app) {
 			if (err) {
 				return res.render('index.html', showError(err));
 			}
-			
+
 			var baseUrl = 'http://' + req.headers.host,
 				urls = {
 					original: req.body.url,
@@ -59,6 +59,12 @@ exports.generate = function(app) {
 
 		});
 
+	});
+
+	app.get('/about/', function(req, res) {
+		res.render('about.html', {
+			title: 'About Slideborg'
+		});
 	});
 
 	// provide a viewing url
