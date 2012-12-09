@@ -40,7 +40,7 @@ ul,ol {
 }
 
 .wrapper {
-	max-width: 50em;
+	max-width: 40em;
 	margin: 0 auto;
 	height: 100%;
 	position: relative;
@@ -49,19 +49,24 @@ ul,ol {
 .main-header {
 	height: 86px;
 	border-bottom:dotted 5px #444;
+	text-align: center;
 }
 
 .logotype {
 	position: absolute;
-	bottom: -50px;
+	bottom: -51px;
 	left: 50%;
 	margin-left: -186px;
 }
 
 .main-section .wrapper {
+	padding: 3em 0;
+}
+
+.bottom-divider {
 	box-shadow: 0 6px 5px -5px rgba(0,0,0,0.3);
-	padding: 4em 0;
 	border-bottom: solid 1px #ccc;
+	border-radius: 5px;
 }
 
 .main-footer {
@@ -97,13 +102,13 @@ button {
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.6);
 	font-weight: bold;
 	box-shadow: inset -1px 1px 0 rgba(255,255,255,0.3);
-	background: #7d8189; /* Old browsers */
-	background: -moz-linear-gradient(top,  #7d8189 0%, #45484d 16%, #000000 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7d8189), color-stop(16%,#45484d), color-stop(100%,#000000)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #7d8189 0%,#45484d 16%,#000000 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #7d8189 0%,#45484d 16%,#000000 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #7d8189 0%,#45484d 16%,#000000 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #7d8189 0%,#45484d 16%,#000000 100%); /* W3C */
+	background: #222; /* Old browsers */
+	background: -moz-linear-gradient(top,  #7d8189 0%, #45484d 16%, #222 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7d8189), color-stop(16%,#45484d), color-stop(100%,#222)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #7d8189 0%,#45484d 16%,#222 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #7d8189 0%,#45484d 16%,#222 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #7d8189 0%,#45484d 16%,#222 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #7d8189 0%,#45484d 16%,#222 100%); /* W3C */
 }
 button:hover {
 	box-shadow: inset 0 0 1px 1px #FF9B00;
@@ -116,7 +121,7 @@ button:active {
 
 .large-input {
 	font-size: 1.2em;
-	width: 65%;
+	width: 75%;
 	box-sizing: border-box;
 	padding: 0.5em;
 }
@@ -140,22 +145,20 @@ button:active {
 	font-weight: bold;
 }
 
-@media (max-width: 50em) {
-	h1 {
-		font-size: 2em; 
-	}
+@media (max-width: 374px) {
+
 	.main-header {
-		height: 50px;
+		height: 48px; 
 	}
+
 	.logotype {
-		margin-left: -2.5em;
+		width: 220px;
+		bottom: -32px;
+		margin-left: -110px;
 	}
-	.logo {
-		width: 54px;
-		left: -55px;
-		top: -15px;
-	}
+
 	.main-section .wrapper {
 		padding: 2em 0;
 	}
+
 }
