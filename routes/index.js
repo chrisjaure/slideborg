@@ -27,6 +27,10 @@ exports.generate = function(app) {
 
 		return io.createSession(req.body.url, function(err, session) {
 
+			if (err) {
+				return res.render('index.html', showError(err));
+			}
+			
 			var baseUrl = 'http://' + req.headers.host,
 				urls = {
 					original: req.body.url,
@@ -34,9 +38,6 @@ exports.generate = function(app) {
 					master: baseUrl + '/deck/'+ session.id + '|' + session.masterId +'/'
 				};
 
-			if (err) {
-				return res.render('index.html', showError(err));
-			}
 
 
 			async.series([
