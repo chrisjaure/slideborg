@@ -84,12 +84,12 @@ exports.generate = function(app) {
 	// proxy all asset requests
 	app.get('*', function(req, res, next) {
 		var
-			match = (req.headers.referer || '').match(/\/deck\/([a-f0-9\-\|]*)\//),
+			match = decodeURI(req.headers.referer || '').match(/\/deck\/([a-f0-9\-\|]*)\//),
 			session = (match && match[1]) ? io.getSession(parseSessionId(match[1])) : null,
 			asset_url;
 
 		if (session) {
-			asset_url = url.resolve(session.url, req.url.replace(match[0], ''));
+			asset_url = url.resolve(session.url, decodeURI(req.url).replace(match[0], ''));
 			req.pipe(request(asset_url)).pipe(res);
 		}
 		else {
